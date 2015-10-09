@@ -1,4 +1,5 @@
 <?php
+
 function GetConnection() {
     DEFINE("HOST", "127.0.0.1");
     DEFINE("DBNAME", "gestion_film");
@@ -117,7 +118,7 @@ function InfoUser() {
         <legend>
 	Modifier votre profil
 	</legend>
-        <input type="hidden" name="idUser" value="'.$ligne['idUser'].'" />
+        <input type="hidden" name="idUser" value="' . $ligne['idUser'] . '" />
 	<table>
             <tr>
 		<td>
@@ -205,7 +206,51 @@ function ModifUser() {
 
         //On execute la requête
         $count->execute();
-        
+
+        //L'utilisateur est redirigé sur la page de profil
+        header('Location: ./Profil.php');
+    } else {
+        //Si non, on affiche un message d'erreur
+        echo 'Les champs remplis ne sont pas corrects...';
+    }
+}
+
+function SelectCategories() {
+    $count = GetConnection()->exec('SET NAMES utf8');
+    $count = GetConnection()->prepare("SELECT * FROM categories ");
+    $count->execute();
+
+    while ($row = $count->fetch(PDO::FETCH_ASSOC)) {
+        //On affiche les valeurs Ã  chque tour de boucle
+        echo '<option value="' . $row['idCategorie'] . '">' . $row['nomCategorie'] . '</option>';
+    }
+}
+
+function AddVideos() {
+    if (!empty($_REQUEST['nom'])) {
+
+        $nom = $_REQUEST['nom'];
+        $prenom = $_REQUEST['prenom'];
+        $pseudo = $_REQUEST['pseudo'];
+        $email = $_REQUEST['email'];
+        $password = $_REQUEST['password'];
+        $Hashpassword = sha1(md5(sha1($password . $email)));
+        $date = $_REQUEST['date'];
+
+        //On prépare la requête d'ajout des données dans la base avec les paramètres choisis
+        $count = GetConnection()->prepare("UPDATE users SET nom = :nom, prenom = :prenom, pseudo = :pseudo, email = :email, password = :password, dateNaissance = :date, admin = '$admin' WHERE idUser = '$user'");
+
+        //On met en paramètre ce qu'on veut ajouter dans la base
+        $count->bindParam(':nom', $nom, PDO::PARAM_STR);
+        $count->bindParam(':prenom', $prenom, PDO::PARAM_STR);
+        $count->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+        $count->bindParam(':email', $email, PDO::PARAM_STR);
+        $count->bindParam(':password', $Hashpassword, PDO::PARAM_STR);
+        $count->bindParam(':date', $date, PDO::PARAM_INT);
+
+        //On execute la requête
+        $count->execute();
+
         //L'utilisateur est redirigé sur la page de profil
         header('Location: ./Profil.php');
     } else {

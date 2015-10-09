@@ -34,6 +34,7 @@ if (empty($_SESSION['user_name'])) {
                     ?>
                 </fieldset>
                 <ul><a href="./Profil.php">Profil</a></ul>
+                <ul><a href="./Liste_Videos.php">Voir les vidéos</a></ul>
                 <?php
                 //On verifie si la personne connectée est bien un administrateur
                 if ($_SESSION['admin'] == 1) {
