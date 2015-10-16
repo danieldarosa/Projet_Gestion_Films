@@ -101,6 +101,8 @@ fieldset{
     width: 85%;
 }
 h1{
+    font-family: OCR A Std;
+    color: white;
     text-align: center;
     font-size: 25pt;
     border-bottom: solid 1px silver;

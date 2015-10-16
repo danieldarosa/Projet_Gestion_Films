@@ -41,6 +41,7 @@ session_destroy();
                         </table>
                     </fieldset>
                 </form>
+                <h1>Menu</h1>
             </nav>
             <section>
                 <p>Si vous voulez vous inscrire cliquez sur le lien d'inscription en-dessous.</p>

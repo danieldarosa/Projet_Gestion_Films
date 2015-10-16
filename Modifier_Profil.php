@@ -32,6 +32,7 @@ if (empty($_SESSION['user_name'])) {
                     }
                     ?>
                 </fieldset>
+                <h1>Menu</h1>
                 <ul><a href="./Profil.php">Profil</a></ul>
                 <ul><a href="./Liste_Videos.php">Voir les vidéos</a></ul>
                 <?php
