@@ -65,7 +65,7 @@ if (empty($_SESSION['user_name'])) {
                                     Lien de votre vidéo :*
                                 </td>
                                 <td>
-                                    <input type="text" name="prenom" id="prenom" placeholder="Lien de la vidéo" required autofocus />
+                                    <input type="text" name="lien" id="lien" placeholder="Lien de la vidéo" required autofocus />
                                 </td>
                             </tr>
                             <tr>
@@ -81,7 +81,7 @@ if (empty($_SESSION['user_name'])) {
                                     Descritpion :
                                 </td>
                                 <td>
-                                    <textarea name="message" cols="50" rows="10"></textarea>
+                                    <textarea name="description" cols="50" rows="10"></textarea>
                                 </td>
                             </tr>
                             <tr>

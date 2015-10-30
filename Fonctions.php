@@ -227,35 +227,91 @@ function SelectCategories() {
 }
 
 function AddVideos() {
+    session_start();
+
     if (!empty($_REQUEST['nom'])) {
 
+        $user_id = $_SESSION['user_id'];
         $nom = $_REQUEST['nom'];
-        $prenom = $_REQUEST['prenom'];
-        $pseudo = $_REQUEST['pseudo'];
-        $email = $_REQUEST['email'];
-        $password = $_REQUEST['password'];
-        $Hashpassword = sha1(md5(sha1($password . $email)));
-        $date = $_REQUEST['date'];
+        $lien = $_REQUEST['lien'];
+        $categorie = $_REQUEST['categorie'];
+        $description = $_REQUEST['description'];
 
         //On prépare la requête d'ajout des données dans la base avec les paramètres choisis
-        $count = GetConnection()->prepare("UPDATE users SET nom = :nom, prenom = :prenom, pseudo = :pseudo, email = :email, password = :password, dateNaissance = :date, admin = '$admin' WHERE idUser = '$user'");
+        $count = GetConnection()->prepare("INSERT INTO videos(nomVideo,lienVideo,descVideo,dateAjout,idCategorie,idUser) VALUES(:nom, :lien, :description, CURRENT_TIMESTAMP, '$categorie', '$user_id')");
 
         //On met en paramètre ce qu'on veut ajouter dans la base
         $count->bindParam(':nom', $nom, PDO::PARAM_STR);
-        $count->bindParam(':prenom', $prenom, PDO::PARAM_STR);
-        $count->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
-        $count->bindParam(':email', $email, PDO::PARAM_STR);
-        $count->bindParam(':password', $Hashpassword, PDO::PARAM_STR);
-        $count->bindParam(':date', $date, PDO::PARAM_INT);
-
+        $count->bindParam(':lien', $lien, PDO::PARAM_STR);
+        $count->bindParam(':description', $description, PDO::PARAM_STR);
         //On execute la requête
         $count->execute();
 
-        //L'utilisateur est redirigé sur la page de profil
-        header('Location: ./Profil.php');
+        //L'utilisateur est redirigé sur la page de la liste des vidéos
+        header('Location: ./Liste_Videos.php');
     } else {
         //Si non, on affiche un message d'erreur
         echo 'Les champs remplis ne sont pas corrects...';
+    }
+}
+
+function SelectVideos() {
+    $count = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users ORDER BY nomVideo");
+
+    //On execute la requête
+    $count->execute();
+
+    //On affiche toutes les vidéos qui existent dans la base
+    while ($row = $count->fetch(PDO::FETCH_ASSOC)) {
+        echo '<br />';
+        echo '<a href="Regarder_Videos.php?id=' . $row['idVideo'] . '&idUser=' . $row['idUser'] . '">' . $row['nomVideo'] . '</a> - par: ' . $row['pseudo'];
+        echo '<br />';
+    }
+}
+
+function ShowVideo() {
+    $id = $_GET['id'];
+    $idUser = $_GET['idUser'];
+
+    //On prépare la requête pour sélectioner les données voulues
+    $selectVideo = GetConnection()->prepare("SELECT * FROM videos WHERE idVideo = $id ");
+
+    //On execute la requête
+    $selectVideo->execute();
+
+    //On met dans un tableau les données reçus de la base
+    $row = $selectVideo->fetch(PDO::FETCH_ASSOC);
+
+    //On vérifie si on a trouvé la bonne vidéo
+    if ($row != null) {
+        //On met dans des variables $_SESSION les données qui permettront de différencier la bonne vidéo
+        $_SESSION['idVideo'] = $row['idVideo'];
+        $_SESSION['idUser'] = $row['idUser'];
+    }
+
+    //On encode tout en utf8
+    $name = GetConnection()->exec('SET NAMES utf8');
+
+    //On prÃ©pare la requête pour afficher les informations
+    $showVideo = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users NATURAL JOIN categories WHERE idVideo = $id ");
+
+    //On execute la requête
+    $showVideo->execute();
+
+    //On crÃ©e une boucle pour afficher tout le contenu prÃ©sent dans la base
+    while ($row = $showVideo->fetch(PDO::FETCH_ASSOC)) {
+
+        //On affiche les informations voulues
+        echo '<h1>'. $row['nomVideo'] . '</h1>';
+        echo '<br />';
+        echo '<iframe width="750" height="400" src="https://www.youtube.com/embed/'. $row['lienVideo'] .'" frameborder="0" allowfullscreen></iframe>';
+        echo '<br />';
+        echo 'Date d\' ajout : ' . $row['dateAjout'];
+        echo '<br />';
+        echo 'Ajouté par  ' . $row['pseudo'];
+        echo '<br />';
+        echo '<br />';
+        echo 'Description : ' . $row['descVideo'];
     }
 }
 

@@ -46,6 +46,8 @@ if (empty($_SESSION['user_name'])) {
             <section>
                     <h1>Liste des vidéos</h1>
                     <a href="./Ajouter_Video.php">Ajouter une vidéo</a>
+                    <br />
+                    <?php SelectVideos(); ?>
             </section>
             <footer>
             </footer>
