@@ -1,12 +1,13 @@
 <?php
 
-function GetConnection() {
-    DEFINE("HOST", "127.0.0.1");
-    DEFINE("DBNAME", "gestion_film");
-    DEFINE("USERNAME", "root");
-    DEFINE("PASSWORD", "");
+DEFINE("HOST", "127.0.0.1");
+DEFINE("DBNAME", "gestion_film");
+DEFINE("USERNAME", "root");
+DEFINE("PASSWORD", "");
 
+function GetConnection() {
     static $dbh = null;
+
     try {
         if ($dbh == null) {
             $dbh = new PDO('mysql:host=' . HOST . ';dbname=' . DBNAME, USERNAME, PASSWORD);
@@ -17,23 +18,17 @@ function GetConnection() {
     return $dbh;
 }
 
-function Login() {
-//On met dans des variables les données reçues par l'utilisateur
-    $email = $_REQUEST['email'];
-    $password = $_REQUEST['password'];
+function Login($email, $password) {
+   
     $Hashpassword = sha1(md5(sha1($password . $email)));
 
-//On prépare la requête
     $count = GetConnection()->prepare("SELECT * FROM users WHERE Email='$email' AND Password = '$Hashpassword'  LIMIT 1");
 
-//On execute la requête
     $count->execute();
 
     $row = $count->fetch(PDO::FETCH_ASSOC);
 
-// Si on a trouvé un utilisateur
     if ($row != null) {
-        //On commmence la session
         session_start();
         $_SESSION['user_id'] = $row['idUser'];
         $_SESSION['user_name'] = $row['email'];
@@ -44,16 +39,10 @@ function Login() {
     }
 }
 
-function InsertUser() {
-    if (!empty($_REQUEST['nom'])) {
-
-        $nom = $_REQUEST['nom'];
-        $prenom = $_REQUEST['prenom'];
-        $pseudo = $_REQUEST['pseudo'];
-        $email = $_REQUEST['email'];
-        $password = $_REQUEST['password'];
+function InsertUser($nom, $prenom, $pseudo, $email, $password, $date) {
+    if (!empty($nom)) {
+        
         $Hashpassword = sha1(md5(sha1($password . $email)));
-        $date = $_REQUEST['date'];
 
         //On prépare la requête d'ajout des données dans la base avec les paramètres choisis
         $count = GetConnection()->prepare("INSERT INTO users(nom,prenom,pseudo,email,password,dateNaissance,admin) VALUES(:nom, :prenom, :pseudo, :email, :password, :date, 0)");
@@ -101,7 +90,7 @@ function IfAdmin() {
 }
 
 function WelcomeMessage() {
-    echo 'Bienvenue ' . $_SESSION['user_name'] . '.';
+    echo 'Bienvenue ' . $_SESSION['user_name'];
     echo '<br />';
     echo '<a href="./Logout.php">Logout</a>';
 }
@@ -269,9 +258,9 @@ function SelectVideos() {
     }
 }
 
-function ShowVideo() {
+function GetDataVideo() {
     $id = $_GET['id'];
-    $idUser = $_GET['idUser'];
+    $User = $_GET['idUser'];
 
     //On prépare la requête pour sélectioner les données voulues
     $selectVideo = GetConnection()->prepare("SELECT * FROM videos WHERE idVideo = $id ");
@@ -288,9 +277,11 @@ function ShowVideo() {
         $_SESSION['idVideo'] = $row['idVideo'];
         $_SESSION['idUser'] = $row['idUser'];
     }
+}
 
-    //On encode tout en utf8
-    $name = GetConnection()->exec('SET NAMES utf8');
+function ShowVideo() {
+    $id = $_SESSION['idVideo'];
+    $idUser = $_SESSION['user_id'];
 
     //On prÃ©pare la requête pour afficher les informations
     $showVideo = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users NATURAL JOIN categories WHERE idVideo = $id ");
@@ -302,9 +293,9 @@ function ShowVideo() {
     while ($row = $showVideo->fetch(PDO::FETCH_ASSOC)) {
 
         //On affiche les informations voulues
-        echo '<h1>'. $row['nomVideo'] . '</h1>';
+        echo '<h1>' . $row['nomVideo'] . '</h1>';
         echo '<br />';
-        echo '<iframe width="750" height="400" src="https://www.youtube.com/embed/'. $row['lienVideo'] .'" frameborder="0" allowfullscreen></iframe>';
+        echo '<iframe width="750" height="400" src="https://www.youtube.com/embed/' . $row['lienVideo'] . '" frameborder="0" allowfullscreen></iframe>';
         echo '<br />';
         echo 'Date d\' ajout : ' . $row['dateAjout'];
         echo '<br />';

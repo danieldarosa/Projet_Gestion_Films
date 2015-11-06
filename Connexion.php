@@ -2,7 +2,7 @@
 require_once 'Fonctions.php';
 
 if (isset($_REQUEST['envoyer'])) {
-    Login();
+    Login($_REQUEST['email'], $_REQUEST['password']);
 }
 ?>
 <!DOCTYPE HTML>

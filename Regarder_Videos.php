@@ -2,7 +2,7 @@
 require_once 'Fonctions.php';
 //On commence la session
 session_start();
-
+GetDataVideo();
 //On verifie si l'utilisateur n'est pas logué dans le site, si oui il est redirigé sur la page d'acceuil
 if (empty($_SESSION['user_name'])) {
     header('Location: ./Index.php');
@@ -45,7 +45,11 @@ if (empty($_SESSION['user_name'])) {
             </nav>
             <section>
                 <form id="Commentaire" action="Ajouter_Commentaire.php">
-                    <?php ShowVideo(); ?>
+                    <?php 
+                        if(isset($_SESSION['idVideo'])) {
+                            ShowVideo();
+                        }
+                    ?>
                 </form>
             </section>
             <footer>
