@@ -19,7 +19,7 @@ function GetConnection() {
 }
 
 function Login($email, $password) {
-   
+
     $Hashpassword = sha1(md5(sha1($password . $email)));
 
     $count = GetConnection()->prepare("SELECT * FROM users WHERE Email='$email' AND Password = '$Hashpassword'  LIMIT 1");
@@ -41,7 +41,7 @@ function Login($email, $password) {
 
 function InsertUser($nom, $prenom, $pseudo, $email, $password, $date) {
     if (!empty($nom)) {
-        
+
         $Hashpassword = sha1(md5(sha1($password . $email)));
 
         //On prépare la requête d'ajout des données dans la base avec les paramètres choisis
@@ -84,7 +84,7 @@ function ReadUser($id) {
 }
 
 function IfAdmin() {
-    echo '<ul><a href="./Admin.php"> Administration </a></ul>';
+    echo '<ul><a href="./Administration.php"> Administration </a></ul>';
 }
 
 function WelcomeMessage($user) {
@@ -212,7 +212,7 @@ function AddVideos($id, $nom, $lien, $categorie, $description) {
         $count->bindParam(':description', $description, PDO::PARAM_STR);
         //On execute la requête
         $count->execute();
-        
+
         //L'utilisateur est redirigé sur la page de la liste des vidéos
         header('Location: ./Liste_Videos.php');
     } else {
@@ -276,5 +276,53 @@ function ShowVideo($idVideo, $idUser) {
         echo 'Description : ' . $row['descVideo'];
     }
 }
+
+function SelectAllUsers() {
+    $select = GetConnection()->exec("SET NAMES utf8");
+    $select = GetConnection()->prepare("SELECT * FROM users");
+    $select->execute();
+    $user = $select->fetchAll(PDO::FETCH_ASSOC);
+    return $user;
+}
+
+function GetAllUsers() {
+    $user = SelectAllUsers();
+    foreach ($user as $value) {
+        echo ' Nom : ' . $value['nom'] . ' <br/> ';
+        echo ' Prénom : ' . $value['prenom'] . ' <br/> ';
+        echo ' Pseudo : ' . $value['pseudo'] . ' <br/> ';
+        echo ' Email : ' . $value['email'] . ' <br/> ';
+        echo ' Date de naisssance : ' . $value['dateNaissance'] . ' <br/> ';
+        echo '<a href="Supprimer_Utilisateur.php?id=' . $value['idUser'] . '">Supprimer l\'utilisateur</a> <br/>';
+        echo '<br/>';
+    }
+}
+
+function SelectAllVideos() {
+    $select = GetConnection()->exec("SET NAMES utf8");
+    $select = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users NATURAL JOIN categories");
+    $select->execute();
+    $video = $select->fetchAll(PDO::FETCH_ASSOC);
+    return $video;
+}
+
+function GetAllVideos() {
+    $video = SelectAllVideos();
+    foreach ($video as $value) {
+        echo ' Nom de la vidéo : ' . $value['nomVideo'] . ' <br/> ';
+        echo ' Par : ' . $value['pseudo'] . ' <br/> ';
+        echo ' Pseudo : ' . $value['nomCategorie'] . ' <br/> ';
+        echo '<a href="Supprimer_Video.php?id=' . $value['idVideo'] . '">Supprimer la vidéo</a> <br/>';
+        echo '<br/>';
+    }
+}
+
+function DeleteUser($id) {
+    $deleteUser = GetConnection()->prepare("DELETE FROM user WHERE idUser = '$id'");
+    $deleteUser->execute();
+    $deleteVideosUser = GetConnection()->prepare("DELETE FROM videos NATURAL JOIN user WHERE idUser = '$id'");
+    $deleteVideosUser->execute();
+}
+
 
 ?>

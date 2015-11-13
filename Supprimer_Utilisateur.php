@@ -46,16 +46,12 @@ if (empty($_SESSION['user_name'])) {
                 <ul><a href="./Logout.php">Logout</a></ul>
             </nav>
             <section>
-                <form id="SupprimerUser" action="Supprimer_Utilisateur.php" method="post">
-                    <h1>Utilisateurs du site</h1>
+                <form id="SuppressionUser" action="Supprimer_Utilisateur_Reussi.php" method="post">
                     <?php
-                        GetAllUsers();
-                    ?>
-                </form>
-                <form id="SupprimerVideo" action="Supprimer_Video.php" method="post">
-                    <h1>Vidéos présentes sur le site</h1>
-                    <?php
-                        GetAllVideos();
+                    $id = $_GET['id'];
+                    echo'<input type="hidden" name="id" value="' . $id . '" />';
+                    echo 'Voulez-vous supprimer cet utilisateur ?';
+                    echo '<input id="confirmer" type="submit" name="confirmer" value="Confirmer"/><br/>';
                     ?>
                 </form>
             </section>
