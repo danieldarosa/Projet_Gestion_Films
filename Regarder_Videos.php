@@ -2,7 +2,7 @@
 require_once 'Fonctions.php';
 //On commence la session
 session_start();
-GetDataVideo();
+GetDataVideo($_GET['id'], $_GET['idUser']);
 //On verifie si l'utilisateur n'est pas logué dans le site, si oui il est redirigé sur la page d'acceuil
 if (empty($_SESSION['user_name'])) {
     header('Location: ./Index.php');
@@ -23,7 +23,7 @@ if (empty($_SESSION['user_name'])) {
                 <?php
                 //On affiche un message de bienvenue à l'utilisateur qui est connecté
                 if (isset($_SESSION['user_name'])) {
-                    WelcomeMessage();
+                    WelcomeMessage($_SESSION['user_name']);
                 }
                 ?>
             </header>
@@ -44,7 +44,7 @@ if (empty($_SESSION['user_name'])) {
                 <form id="Commentaire" action="Ajouter_Commentaire.php">
                     <?php
                     if (isset($_SESSION['idVideo'])) {
-                        ShowVideo();
+                        ShowVideo($_SESSION['idVideo'], $_SESSION['user_id']);
                     }
                     ?>
                 </form>

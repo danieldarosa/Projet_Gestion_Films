@@ -63,10 +63,10 @@ function InsertUser($nom, $prenom, $pseudo, $email, $password, $date) {
     }
 }
 
-function ReadUser() {
-    if (isset($_SESSION['user_id'])) {
+function ReadUser($id) {
+    if (isset($id)) {
         //On prépare la requête pour afficher les informations
-        $count = GetConnection()->prepare("SELECT * FROM users WHERE idUser = '" . $_SESSION['user_id'] . "' LIMIT 1");
+        $count = GetConnection()->prepare("SELECT * FROM users WHERE idUser = '" . $id . "' LIMIT 1");
 
         //On execute la requête
         $count->execute();
@@ -87,8 +87,8 @@ function IfAdmin() {
     echo '<ul><a href="./Admin.php"> Administration </a></ul>';
 }
 
-function WelcomeMessage() {
-    echo 'Bienvenue ' . $_SESSION['user_name'];
+function WelcomeMessage($user) {
+    echo 'Bienvenue ' . $user;
 }
 
 function InfoUser() {
@@ -164,22 +164,12 @@ function InfoUser() {
     </fieldset>';
 }
 
-function ModifUser() {
-    if (!empty($_REQUEST['nom'])) {
-
-        $admin = $_SESSION['admin'];
-        $user = $_REQUEST['idUser'];
-
-        $nom = $_REQUEST['nom'];
-        $prenom = $_REQUEST['prenom'];
-        $pseudo = $_REQUEST['pseudo'];
-        $email = $_REQUEST['email'];
-        $password = $_REQUEST['password'];
+function ModifUser($id, $nom, $prenom, $pseudo, $email, $password, $date, $admin) {
+    if (!empty($nom)) {
         $Hashpassword = sha1(md5(sha1($password . $email)));
-        $date = $_REQUEST['date'];
 
         //On prépare la requête d'ajout des données dans la base avec les paramètres choisis
-        $count = GetConnection()->prepare("UPDATE users SET nom = :nom, prenom = :prenom, pseudo = :pseudo, email = :email, password = :password, dateNaissance = :date, admin = '$admin' WHERE idUser = '$user'");
+        $count = GetConnection()->prepare("UPDATE users SET nom = :nom, prenom = :prenom, pseudo = :pseudo, email = :email, password = :password, dateNaissance = :date, admin = '$admin' WHERE idUser = '$id'");
 
         //On met en paramètre ce qu'on veut ajouter dans la base
         $count->bindParam(':nom', $nom, PDO::PARAM_STR);
@@ -211,19 +201,10 @@ function SelectCategories() {
     }
 }
 
-function AddVideos() {
-    session_start();
-
-    if (!empty($_REQUEST['nom'])) {
-
-        $user_id = $_SESSION['user_id'];
-        $nom = $_REQUEST['nom'];
-        $lien = $_REQUEST['lien'];
-        $categorie = $_REQUEST['categorie'];
-        $description = $_REQUEST['description'];
-
+function AddVideos($id, $nom, $lien, $categorie, $description) {
+    if (!empty($nom)) {
         //On prépare la requête d'ajout des données dans la base avec les paramètres choisis
-        $count = GetConnection()->prepare("INSERT INTO videos(nomVideo,lienVideo,descVideo,dateAjout,idCategorie,idUser) VALUES(:nom, :lien, :description, CURRENT_TIMESTAMP, '$categorie', '$user_id')");
+        $count = GetConnection()->prepare("INSERT INTO videos(nomVideo,lienVideo,descVideo,dateAjout,idCategorie,idUser) VALUES(:nom, :lien, :description, CURRENT_TIMESTAMP, '$categorie', '$id')");
 
         //On met en paramètre ce qu'on veut ajouter dans la base
         $count->bindParam(':nom', $nom, PDO::PARAM_STR);
@@ -231,7 +212,7 @@ function AddVideos() {
         $count->bindParam(':description', $description, PDO::PARAM_STR);
         //On execute la requête
         $count->execute();
-
+        
         //L'utilisateur est redirigé sur la page de la liste des vidéos
         header('Location: ./Liste_Videos.php');
     } else {
@@ -254,10 +235,7 @@ function SelectVideos() {
     }
 }
 
-function GetDataVideo() {
-    $id = $_GET['id'];
-    $User = $_GET['idUser'];
-
+function GetDataVideo($id, $user) {
     //On prépare la requête pour sélectioner les données voulues
     $selectVideo = GetConnection()->prepare("SELECT * FROM videos WHERE idVideo = $id ");
 
@@ -275,17 +253,14 @@ function GetDataVideo() {
     }
 }
 
-function ShowVideo() {
-    $id = $_SESSION['idVideo'];
-    $idUser = $_SESSION['user_id'];
-
-    //On prÃ©pare la requête pour afficher les informations
-    $showVideo = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users NATURAL JOIN categories WHERE idVideo = $id ");
+function ShowVideo($idVideo, $idUser) {
+    //On prépare la requête pour afficher les informations
+    $showVideo = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users NATURAL JOIN categories WHERE idVideo = $idVideo ");
 
     //On execute la requête
     $showVideo->execute();
 
-    //On crÃ©e une boucle pour afficher tout le contenu prÃ©sent dans la base
+    //On crée une boucle pour afficher tout le contenu présent dans la base
     while ($row = $showVideo->fetch(PDO::FETCH_ASSOC)) {
 
         //On affiche les informations voulues

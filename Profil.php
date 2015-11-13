@@ -23,7 +23,7 @@ if (empty($_SESSION['user_name'])) {
                 <?php
                 //On affiche un message de bienvenue à l'utilisateur qui est connecté
                 if (isset($_SESSION['user_name'])) {
-                    WelcomeMessage();
+                    WelcomeMessage($_SESSION['user_name']);
                 }
                 ?>
             </header>
@@ -45,7 +45,7 @@ if (empty($_SESSION['user_name'])) {
                     <h1>Profil</h1>
                     <?php
                     if (isset($_SESSION['user_name'])) {
-                        ReadUser();
+                        ReadUser($_SESSION['user_id']);
                     }
                     ?>
                     <input type="submit" name="modifier" value="Modifier votre profil" align="right">
