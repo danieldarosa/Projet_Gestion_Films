@@ -85,14 +85,10 @@ function ReadUser() {
 
 function IfAdmin() {
     echo '<ul><a href="./Admin.php"> Administration </a></ul>';
-    echo '<ul><a href="./Gestion_Utilisateurs.php"> Gestion des utilisateurs </a></ul>';
-    echo '<ul><a href="./Gestion_Posts.php"> Gestion des Vidéos </a></ul>';
 }
 
 function WelcomeMessage() {
     echo 'Bienvenue ' . $_SESSION['user_name'];
-    echo '<br />';
-    echo '<a href="./Logout.php">Logout</a>';
 }
 
 function InfoUser() {

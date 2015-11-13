@@ -11,7 +11,7 @@ if (empty($_SESSION['user_name'])) {
 ?>
 
 <!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<html lang="fr">
     <head> 
         <meta http-equiv="content-type" content="test/html; charset=UTF-8" />
         <title>Projet gestion films</title>
@@ -20,19 +20,14 @@ if (empty($_SESSION['user_name'])) {
     <body> 
         <div id="Conteneur">
             <header>
+                <?php
+                //On affiche un message de bienvenue à l'utilisateur qui est connecté
+                if (isset($_SESSION['user_name'])) {
+                    WelcomeMessage();
+                }
+                ?>
             </header>
             <nav>
-                <fieldset class="log">
-                    <legend>
-                        Logout
-                    </legend>
-                    <?php
-                    //On affiche un message de bienvenue à l'utilisateur qui est connecté
-                    if (isset($_SESSION['user_name'])) {
-                        WelcomeMessage();
-                    }
-                    ?>
-                </fieldset>
                 <h1>Menu</h1>
                 <ul><a href="./Profil.php">Profil</a></ul>
                 <ul><a href="./Liste_Videos.php">Voir les vidéos</a></ul>
@@ -42,12 +37,14 @@ if (empty($_SESSION['user_name'])) {
                     IfAdmin();
                 }
                 ?>
+                <ul><a href="./Support.php">Support</a></ul>
+                <ul><a href="./Logout.php">Logout</a></ul>
             </nav>
             <section>
-                    <h1>Liste des vidéos</h1>
-                    <a href="./Ajouter_Video.php">Ajouter une vidéo</a>
-                    <br />
-                    <?php SelectVideos(); ?>
+                <h1>Liste des vidéos</h1>
+                <a href="./Ajouter_Video.php">Ajouter une vidéo</a>
+                <br />
+                <?php SelectVideos(); ?>
             </section>
             <footer>
             </footer>

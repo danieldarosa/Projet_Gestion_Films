@@ -6,7 +6,7 @@ if (isset($_REQUEST['envoyer'])) {
 }
 ?>
 <!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<html lang="fr">
     <head> 
         <meta http-equiv="content-type" content="test/html; charset=UTF-8" />
         <title>Projet gestion films</title>
@@ -14,42 +14,24 @@ if (isset($_REQUEST['envoyer'])) {
     </head>
     <body>
         <div id="Conteneur">
-            <header>A faire à la maison (image)</header>
-            <nav>
+           <header>
                 <form id="connexion" action="Connexion.php" method="post" >
-                    <fieldset class="log">
-                        <legend>
-                            Connexion
-                        </legend>
-                        <table>
-                            <tr>
-                                <td>
-                                    <input type="text" name="email" id="email" placeholder="Email" required autofocus />
-                                </td>
-                            </tr>
-                            <tr>
-                                <tr>
-                                    <td>
-                                        <input type="password" name="password" id="password" placeholder="Mot de passe" required autofocus />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <tr>
-                                        <td>
-                                            <input type="submit" name="envoyer" id="envoyer" placeholder="Mot de passe" required autofocus />
-                                        </td>
-                                    </tr>
-                                </tr>
-                            </tr>
-                        </table>
-                    </fieldset>
+                    Connexion :
+                    <input type="text" name="email" id="email" placeholder="Email" required autofocus />
+                    <input type="password" name="password" id="password" placeholder="Mot de passe" required />
+                    <input type="submit" name="envoyer" id="envoyer" required  />
                 </form>
+            </header>
+            <nav>
+                <h1>Menu</h1>
+                <ul><a href="./Support.php">Support</a></ul>
             </nav>
             <section>
+                <h1>Incription réussi !</h1>
                 <p>Génial ! Vous faites parti désormais de ce site !</p>
                 <p>Maintenant vous pouvez jeter un coup d'oeil a votre profil et aux autres fonctionnalités du site en vous connectant.</p>
             </section>
-            <footer>A faire à la maison (Image)</footer>
+            <footer></footer>
         </div>
     </body>
 </html>
