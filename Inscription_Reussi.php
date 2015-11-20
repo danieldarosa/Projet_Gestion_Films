@@ -1,5 +1,5 @@
 <?php
-require_once 'Fonctions.php';
+require_once 'FonctionsBD.php';
 
 if (isset($_REQUEST['envoyer'])) {
     InsertUser($_REQUEST['nom'], $_REQUEST['prenom'], $_REQUEST['pseudo'], $_REQUEST['email'], $_REQUEST['password'], $_REQUEST['date']);

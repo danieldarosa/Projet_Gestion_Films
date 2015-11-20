@@ -1,5 +1,5 @@
 <?php
-require_once 'fonctions.php';
+require_once 'FonctionsDB.php';
 //On commence la session
 session_start();
 
