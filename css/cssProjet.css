@@ -12,7 +12,7 @@ body
 
 header
 {
-    opacity: 0.9;
+    opacity: 0.95;
     height: 60px; 
     background-color: #494138;
     font-family: OCR A Std;
@@ -24,7 +24,7 @@ header
 
 section
 {
-    opacity: 0.9;
+    opacity: 0.95;
     margin-top: 10px;
     height: 750px;
     width: 985px;
@@ -41,7 +41,7 @@ section
 
 nav
 {
-    opacity: 0.9;
+    opacity: 0.95;
     float: left;
     margin-top: 10px;
     height: 750px;
@@ -61,7 +61,7 @@ input
 
 footer
 {
-    opacity: 0.9;
+    opacity: 0.95;
     margin-top: 10px;
     height: 60px;
     background-color: #494138;

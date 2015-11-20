@@ -94,7 +94,7 @@ function InfoUser() {
     </fieldset>';
 }
 
-function ShowVideo($idVideo, $idUser) {
+function ShowVideo($idVideo) {
     //On prépare la requête pour afficher les informations
     $showVideo = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users NATURAL JOIN categories WHERE idVideo = $idVideo ");
 
@@ -138,7 +138,7 @@ function GetAllVideos() {
     foreach ($video as $value) {
         echo ' Nom de la vidéo : ' . $value['nomVideo'] . ' <br/> ';
         echo ' Par : ' . $value['pseudo'] . ' <br/> ';
-        echo ' Pseudo : ' . $value['nomCategorie'] . ' <br/> ';
+        echo ' Catégorie : ' . $value['nomCategorie'] . ' <br/> ';
         echo '<a href="Supprimer_Video.php?id=' . $value['idVideo'] . '">Supprimer la vidéo</a> <br/>';
         echo '<br/>';
     }

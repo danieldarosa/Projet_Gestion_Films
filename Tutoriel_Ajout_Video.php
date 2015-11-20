@@ -36,6 +36,7 @@ if (empty($_SESSION['user_name'])) {
                 <h1>Menu</h1>
                 <ul><a href="./Profil.php">Profil</a></ul>
                 <ul><a href="./Liste_Videos.php">Voir les vidéos</a></ul>
+                <ul><a href="./Support.php">Support</a></ul>
                 <?php
                 //On verifie si la personne connectée est bien un administrateur
                 if ($_SESSION['admin'] == 1) {

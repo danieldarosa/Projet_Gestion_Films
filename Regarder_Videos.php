@@ -44,7 +44,7 @@ if (empty($_SESSION['user_name'])) {
                 <form id="Commentaire" action="Ajouter_Commentaire.php">
                     <?php
                     if (isset($_SESSION['idVideo'])) {
-                        ShowVideo($_SESSION['idVideo'], $_SESSION['user_id']);
+                        ShowVideo($_SESSION['idVideo']);
                     }
                     ?>
                     <h1>Commentaires de la vidéo</h1>
