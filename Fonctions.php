@@ -293,7 +293,7 @@ function GetAllUsers() {
         echo ' Pseudo : ' . $value['pseudo'] . ' <br/> ';
         echo ' Email : ' . $value['email'] . ' <br/> ';
         echo ' Date de naisssance : ' . $value['dateNaissance'] . ' <br/> ';
-        if($_SESSION['admin'] != $value['admin']) {
+        if ($_SESSION['admin'] != $value['admin']) {
             echo '<a href="Supprimer_Utilisateur.php?id=' . $value['idUser'] . '">Supprimer l\'utilisateur</a> <br/>';
         }
         echo '<br/>';
@@ -333,4 +333,29 @@ function DeleteVideo($id) {
     header('Location: ./Administration.php');
 }
 
+function AddComment($comment, $idUser, $idVideo) {
+    if (!empty($comment)) {
+        //On prépare la requête d'ajout des données dans la base avec les paramètres choisis
+        $count = GetConnection()->prepare("INSERT INTO commentaires(message,dateMessage,idVideo,idUser) VALUES(:comment, CURRENT_TIMESTAMP, '$idVideo', '$idUser')");
+
+        //On met en paramètre ce qu'on veut ajouter dans la base
+        $count->bindParam(':comment', $comment, PDO::PARAM_STR);
+
+        $count->execute();
+    }
+    header('Location: ./Regarder_Videos.php?id=' . $idVideo . '&idUser=' . $idUser . '');
+}
+
+function ShowComments($idVideo, $idUser) {
+    $select = GetConnection()->exec("SET NAMES utf8");
+    $select = GetConnection()->prepare("SELECT * FROM commentaires NATURAL JOIN users WHERE idVideo = '$idVideo' AND idUser = '$idUser'");
+    $select->execute();
+    $comment = $select->fetchAll(PDO::FETCH_ASSOC);
+    
+    foreach($comment as $value) {
+        echo ''. $value['pseudo'] .' le, '. $value['dateMessage'] .': <br/>';
+        echo ''. $value['message'] .'<br/>';
+        echo '<br/>';
+    }
+}
 ?>
