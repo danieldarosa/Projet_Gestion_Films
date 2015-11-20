@@ -15,41 +15,24 @@ if (isset($_REQUEST['envoyer'])) {
 
     <body>
         <div id="Conteneur">
-            <header>A faire à la maison (image)</header>
-            <nav>
+            <header>
                 <form id="connexion" action="Connexion.php" method="post" >
-                    <fieldset class="log">
-                        <legend>
-                            Connexion
-                        </legend>
-                        <table>
-                            <tr>
-                                <td>
-                                    <input type="text" name="email" id="email" placeholder="Email" required autofocus />
-                                </td>
-                            </tr>
-                            <tr>
-                                <tr>
-                                    <td>
-                                        <input type="password" name="password" id="password" placeholder="Mot de passe" required  />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <tr>
-                                        <td>
-                                            <input type="submit" name="envoyer" id="envoyer" placeholder="Mot de passe" required  />
-                                        </td>
-                                    </tr>
-                                </tr>
-                            </tr>
-                        </table>
-                    </fieldset>
+                    Connexion :
+                    <input type="text" name="email" id="email" placeholder="Email" required autofocus />
+                    <input type="password" name="password" id="password" placeholder="Mot de passe" required />
+                    <input type="submit" name="envoyer" id="envoyer" required  />
                 </form>
+            </header>
+            <nav>
+                <h1>Menu</h1>
+                <ul><a href="./Index.php">Page d'acceuil</a></ul>
+                <ul><a href="./Support.php">Support</a></ul>
             </nav>
             <section>
+                <h1>Tentative de connexion echouée</h1>
                 <p>Vous n'avez pas rentré les bons champs... veuillez réessayer</p>
             </section>
-            <footer>A faire à la maison (Image)</footer>
+            <footer></footer>
         </div>
     </body>
 </html>

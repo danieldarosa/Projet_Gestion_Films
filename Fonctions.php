@@ -293,7 +293,9 @@ function GetAllUsers() {
         echo ' Pseudo : ' . $value['pseudo'] . ' <br/> ';
         echo ' Email : ' . $value['email'] . ' <br/> ';
         echo ' Date de naisssance : ' . $value['dateNaissance'] . ' <br/> ';
-        echo '<a href="Supprimer_Utilisateur.php?id=' . $value['idUser'] . '">Supprimer l\'utilisateur</a> <br/>';
+        if($_SESSION['admin'] != $value['admin']) {
+            echo '<a href="Supprimer_Utilisateur.php?id=' . $value['idUser'] . '">Supprimer l\'utilisateur</a> <br/>';
+        }
         echo '<br/>';
     }
 }
@@ -318,11 +320,17 @@ function GetAllVideos() {
 }
 
 function DeleteUser($id) {
-    $deleteUser = GetConnection()->prepare("DELETE FROM user WHERE idUser = '$id'");
+    $deleteUser = GetConnection()->prepare("DELETE FROM users WHERE idUser = '$id'");
     $deleteUser->execute();
-    $deleteVideosUser = GetConnection()->prepare("DELETE FROM videos NATURAL JOIN user WHERE idUser = '$id'");
+    $deleteVideosUser = GetConnection()->prepare("DELETE FROM videos WHERE idUser = '$id'");
     $deleteVideosUser->execute();
+    header('Location: ./Administration.php');
 }
 
+function DeleteVideo($id) {
+    $deleteVideosUser = GetConnection()->prepare("DELETE FROM videos WHERE idVideo = '$id'");
+    $deleteVideosUser->execute();
+    header('Location: ./Administration.php');
+}
 
 ?>

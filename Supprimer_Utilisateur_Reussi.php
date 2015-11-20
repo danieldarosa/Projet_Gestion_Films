@@ -1,9 +1,8 @@
 <?php
-require_once 'Fonctions.php';
 session_start();
+require_once 'Fonctions.php';
 
-if (isset($_REQUEST['envoyer'])) {
-    DeleteUser($_REQUEST['id']);
-    header('Location: ./Administration.php');
+if (isset($_REQUEST['confirmer'])) {
+    DeleteVideo($_REQUEST['id']);
 }
 ?>

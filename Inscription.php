@@ -27,6 +27,7 @@ if (!empty($_SESSION['user_id'])) {
             </header>
             <nav>
                 <h1>Menu</h1>
+                <ul><a href="./Index.php">Page d'acceuil</a></ul>
                 <ul><a href="./Support.php">Support</a></ul>
             </nav>
             <section>

@@ -47,6 +47,10 @@ if (empty($_SESSION['user_name'])) {
                         ShowVideo($_SESSION['idVideo'], $_SESSION['user_id']);
                     }
                     ?>
+                    <h1>Commentaires de la vidéo</h1>
+                    <textarea name="commentaire" cols="133" rows="3" placeholder="Ajouter un commentaire" required autofocus></textarea>
+                    <br />
+                    <input type="submit" name="commenter" value="Ajouter un commentaire">
                 </form>
             </section>
             <footer>
