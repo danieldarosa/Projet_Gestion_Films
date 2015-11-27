@@ -163,7 +163,6 @@ function GetDataVideo($id, $user) {
 }
 
 function SelectAllUsers() {
-    $select = GetConnection()->exec("SET NAMES utf8");
     $select = GetConnection()->prepare("SELECT * FROM users");
     $select->execute();
     $user = $select->fetchAll(PDO::FETCH_ASSOC);
@@ -171,7 +170,6 @@ function SelectAllUsers() {
 }
 
 function SelectAllVideos() {
-    $select = GetConnection()->exec("SET NAMES utf8");
     $select = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users NATURAL JOIN categories");
     $select->execute();
     $video = $select->fetchAll(PDO::FETCH_ASSOC);
@@ -188,10 +186,20 @@ function DeleteUser($id) {
     header('Location: ./Administration.php');
 }
 
-function DeleteVideo($id) {
+function DeleteVideo($idUser, $idVideo) {
+    $delete = GetConnection()->prepare("DELETE FROM videos WHERE idVideo = '$idVideo' AND idUser = '$idUser'");
+    $delete->execute();
+    $deleteCommentsVideo = GetConnection()->prepare("DELETE FROM commentaires WHERE idVideo = '$id' AND idUser = '$idUser'");
+    $deleteCommentsVideo->execute();
+    header('Location: ./Liste_Videos.php');
+}
+
+function DeleteVideoByAdmin($id) {
     $deleteVideosUser = GetConnection()->prepare("DELETE FROM videos WHERE idVideo = '$id'");
     $deleteVideosUser->execute();
-    header('Location: ./Administration.php');
+    $deleteCommentsUser = GetConnection()->prepare("DELETE FROM commentaires WHERE idVideo = '$id'");
+    $deleteCommentsUser->execute();
+    header('Location: ./Liste_Videos.php');
 }
 
 function AddComment($comment, $idUser, $idVideo) {

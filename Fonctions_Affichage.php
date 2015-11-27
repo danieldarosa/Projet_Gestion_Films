@@ -145,7 +145,6 @@ function GetAllVideos() {
 }
 
 function ShowComments($idVideo) {
-    $select = GetConnection()->exec("SET NAMES utf8");
     $select = GetConnection()->prepare("SELECT * FROM commentaires NATURAL JOIN users WHERE idVideo = '$idVideo'");
     $select->execute();
     $comment = $select->fetchAll(PDO::FETCH_ASSOC);

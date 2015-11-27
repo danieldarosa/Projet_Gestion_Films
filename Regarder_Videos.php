@@ -41,15 +41,22 @@ if (empty($_SESSION['user_name'])) {
                 <ul><a href="./Logout.php">Logout</a></ul>
             </nav>
             <section>
-                <form id="Commentaire" action="Ajouter_Commentaire.php">
+                <form id="Supprimer" action="Supprimer_Video_Reussi.php">
                     <?php
                     if (isset($_SESSION['idVideo'])) {
                         ShowVideo($_SESSION['idVideo']);
                     }
                     ?>
+                    <?php
+                    if($_SESSION['user_id'] == $_GET['idUser']) {
+                        echo'<br/><input type="submit" name="supprimer" value="Supprimer la vidéo">';
+                    }
+                    ?>
+                </form>
+                <form id="Commentaire" action="Ajouter_Commentaire.php">
                     <h1>Commentaires de la vidéo</h1>
                     <?php
-                        ShowComments($_SESSION['idVideo']);
+                    ShowComments($_SESSION['idVideo']);
                     ?>
                     <textarea name="commentaire" cols="133" rows="3" placeholder="Ajouter un commentaire" required autofocus></textarea>
                     <br />
