@@ -1,4 +1,5 @@
 <?php
+
 require_once 'Fonctions_Affichage.php';
 
 //Constantes pour la connexion à la base
@@ -36,7 +37,7 @@ function Login($email, $password) {
 
     //On met les valeurs dans un tableau
     $row = $count->fetch(PDO::FETCH_ASSOC);
-    
+
     //Si les données correspondent, on crée les variables de session de l'utilisateur
     if ($row != null) {
         session_start();
@@ -79,6 +80,21 @@ function IfAdmin() {
     echo '<ul><a href="./Administration.php"> Administration </a></ul>';
 }
 
+function IfNotConnected() {
+    echo '<form id="connexion" action="Connexion.php" method="post" >
+          Connexion :
+          <input type="text" name="email" id="email" placeholder="Email" required autofocus />
+          <input type="password" name="password" id="password" placeholder="Mot de passe" required />
+          <input type="submit" name="envoyer" id="envoyer" required  />
+          </form>';
+}
+
+function IfConnected() {
+    echo '<ul><a href="./Profil.php">Profil</a></ul>
+          <ul><a href="./Liste_Videos.php">Voir les vidéos</a></ul>
+          <ul><a href="./Logout.php">Logout</a></ul>';
+}
+
 //Fonction qui affiche le message de bienvenue à l'utilisateur
 function WelcomeMessage($user) {
     echo 'Bienvenue ' . $user;
@@ -115,11 +131,11 @@ function ModifUser($id, $nom, $prenom, $pseudo, $email, $password, $date, $admin
 function SelectCategories() {
     //On encode les champs des catégories en utf8
     $count = GetConnection()->exec('SET NAMES utf8');
-    
+
     //On prépare la requête de séléction des catégories présentes dans la base puis on éxecute celle-ci
     $count = GetConnection()->prepare("SELECT * FROM categories ");
     $count->execute();
-    
+
     while ($row = $count->fetch(PDO::FETCH_ASSOC)) {
         //On affiche les valeurs à chaque tour de boucle
         echo '<option value="' . $row['idCategorie'] . '">' . $row['nomCategorie'] . '</option>';
@@ -131,14 +147,14 @@ function AddVideos($id, $nom, $lien, $categorie, $description) {
     if (!empty($nom)) {
         //On prépare la requête d'ajout des données dans la base avec les paramètres choisis puis on l'éxecute
         $count = GetConnection()->prepare("INSERT INTO videos(nomVideo,lienVideo,descVideo,dateAjout,idCategorie,idUser) VALUES(:nom, :lien, :description, CURRENT_TIMESTAMP, '$categorie', '$id')");
-        
+
         //On met en paramètre ce qu'on veut ajouter dans la base
         $count->bindParam(':nom', $nom, PDO::PARAM_STR);
         $count->bindParam(':lien', $lien, PDO::PARAM_STR);
         $count->bindParam(':description', $description, PDO::PARAM_STR);
-        
+
         $count->execute();
-        
+
         //L'utilisateur est redirigé sur la page de la liste des vidéos
         header('Location: ./Liste_Videos.php');
     } else {
@@ -152,7 +168,7 @@ function SelectVideos() {
     //On prépare la requête de sélection de toutes les vidéos présentes dans la base puis on l'éxecute
     $count = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users ORDER BY nomVideo");
     $count->execute();
-    
+
     //On affiche toutes les vidéos qui existent dans la base
     while ($row = $count->fetch(PDO::FETCH_ASSOC)) {
         //On affiche les vidéos à chaque tour de boucle
@@ -167,10 +183,10 @@ function GetDataVideo($id) {
     //On prépare la requête pour sélectioner toutes les données de la vidéo puis on l'éxecute
     $selectVideo = GetConnection()->prepare("SELECT * FROM videos WHERE idVideo = $id ");
     $selectVideo->execute();
-    
+
     //On met dans un tableau les données reçus de la base
     $row = $selectVideo->fetch(PDO::FETCH_ASSOC);
-    
+
     //On vérifie si on a trouvé la bonne vidéo
     if ($row != null) {
         //On met dans des variables $_SESSION les données qui permettront de différencier la bonne vidéo
@@ -184,24 +200,23 @@ function SelectAllUsers() {
     //On prépare la requête de séléction des utilisateurs
     $select = GetConnection()->prepare("SELECT * FROM users");
     $select->execute();
-    
+
     //On met les données de la requête dans un tableau
     $user = $select->fetchAll(PDO::FETCH_ASSOC);
-    
+
     //On retourne les valeurs du tableau
     return $user;
 }
-
 
 //Fonction qui séléctionne toutes les vidéos qui sont présentes dans le site
 function SelectAllVideos() {
     //On prépare la requête de sélection de toutes les vidéos
     $select = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users NATURAL JOIN categories");
     $select->execute();
-    
+
     //On met les données de la requête dans un tableau
     $video = $select->fetchAll(PDO::FETCH_ASSOC);
-    
+
     //On retourne les valeurs du tableau
     return $video;
 }
@@ -211,15 +226,15 @@ function DeleteUser($id) {
     //On prépare la requête de suppression de l'utilisateur puis on l'éxecute
     $deleteUser = GetConnection()->prepare("DELETE FROM users WHERE idUser = '$id'");
     $deleteUser->execute();
-    
+
     //On prépare la requête de suppression des vidéos de l'utilisateur qu'on va supprimer puis on l'éxecute
     $deleteVideosUser = GetConnection()->prepare("DELETE FROM videos WHERE idUser = '$id'");
     $deleteVideosUser->execute();
-    
+
     //On prépare la requête de suppression des commentaires de l'utilisateur que l'on va supprimer puis on l'éxecute
     $deleteCommentsUser = GetConnection()->prepare("DELETE FROM commentaires WHERE idUser = '$id'");
     $deleteCommentsUser->execute();
-    
+
     //On redirige l'administrateurm dans la page d'administration
     header('Location: ./Administration.php');
 }
@@ -229,11 +244,11 @@ function DeleteVideo($idUser, $idVideo) {
     //On prépare la requête de suppression de la vidéo de l'utilisateur qui l'a ajouté puis on l'éxecute
     $delete = GetConnection()->prepare("DELETE FROM videos WHERE idVideo = '$idVideo' AND idUser = '$idUser'");
     $delete->execute();
-    
+
     //On prépare la requête de suppression des commentaires de la vidéo puis on l'éxecute
     $deleteCommentsVideo = GetConnection()->prepare("DELETE FROM commentaires WHERE idVideo = '$idVideo' AND idUser = '$idUser'");
     $deleteCommentsVideo->execute();
-    
+
     //On redirige l'utilisateur dans la page des vidéos présentes
     header('Location: ./Liste_Videos.php');
 }
@@ -243,11 +258,11 @@ function DeleteVideoByAdmin($id) {
     //On prépare la requête de suppression de la vidéo que l'administrateur veut supprimer puis on l'éxecute
     $deleteVideosUser = GetConnection()->prepare("DELETE FROM videos WHERE idVideo = '$id'");
     $deleteVideosUser->execute();
-    
+
     //On prépare la requête de suppression des commentaires de la vidéos qu'on va supprimer puis on l'éxecute
     $deleteCommentsUser = GetConnection()->prepare("DELETE FROM commentaires WHERE idVideo = '$id'");
     $deleteCommentsUser->execute();
-    
+
     //On redirige l'administrateur dans la page d'administration
     header('Location: ./Administration.php');
 }
@@ -257,7 +272,7 @@ function AddComment($comment, $idUser, $idVideo) {
     if (!empty($comment)) {
         //On prépare la requête d'ajout des données dans la base avec les paramètres choisis et on éxecute la requête
         $count = GetConnection()->prepare("INSERT INTO commentaires(message,dateMessage,idVideo,idUser) VALUES(:comment, CURRENT_TIMESTAMP, '$idVideo', '$idUser')");
-        
+
         //On met en paramètre ce qu'on veut ajouter dans la base
         $count->bindParam(':comment', $comment, PDO::PARAM_STR);
         $count->execute();
@@ -265,4 +280,5 @@ function AddComment($comment, $idUser, $idVideo) {
     //On redirige l'utilisateur sur la page ou il a commenté la vidéo
     header('Location: ./Regarder_Videos.php?id=' . $idVideo . '&idUser=' . $idUser . '');
 }
+
 ?>

@@ -22,6 +22,7 @@ session_destroy();
             <nav>
                 <h1>Menu</h1>
                 <ul><a href="./Support.php">Support</a></ul>
+                <ul><a href="./Liste_Videos.php">Voir les vidéos</a></ul>
             </nav>
             <section>
                 <h1>Bienvenue !</h1>

@@ -1,12 +1,8 @@
 <?php
 require_once 'FonctionsDB.php';
+if(!empty($_SESSION['user_id'])) {
 //On commence la session
 session_start();
-
-//On verifie si l'utilisateur n'est pas logué dans le site, si oui il est redirigé sur la page d'acceuil
-if (empty($_SESSION['user_name'])) {
-    header('Location: ./Index.php');
-    exit();
 }
 ?>
 
@@ -25,24 +21,38 @@ if (empty($_SESSION['user_name'])) {
                 if (isset($_SESSION['user_name'])) {
                     WelcomeMessage($_SESSION['user_name']);
                 }
+                else {
+                    IfNotConnected();
+                }
                 ?>
             </header>
             <nav>
                 <h1>Menu</h1>
-                <ul><a href="./Profil.php">Profil</a></ul>
-                <ul><a href="./Liste_Videos.php">Voir les vidéos</a></ul>
+                
                 <?php
-                //On verifie si la personne connectée est bien un administrateur
-                if ($_SESSION['admin'] == 1) {
-                    IfAdmin();
+                if(!empty($_SESSION['user_id'])) {
+                    IfConnected();
+                    //On verifie si la personne connectée est bien un administrateur
+                    if ($_SESSION['admin'] == 1) {
+                        IfAdmin();
+                    }
                 }
                 ?>
+                <?php
+                    if(empty($_SESSION['user_id'])) {
+                        echo'<ul><a href="./Index.php">Page d\'acceuil</a></ul>';
+                    }
+                ?>
                 <ul><a href="./Support.php">Support</a></ul>
-                <ul><a href="./Logout.php">Logout</a></ul>
+                
             </nav>
             <section>
                 <h1>Liste des vidéos</h1>
-                <a href="./Ajouter_Video.php">Ajouter une vidéo</a>
+                <?php
+                    if(!empty($_SESSION['user_id'])) {
+                        echo'<a href="./Ajouter_Video.php">Ajouter une vidéo</a>';
+                    }
+                ?>
                 <br />
                 <?php SelectVideos(); ?>
             </section>
