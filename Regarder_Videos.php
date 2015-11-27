@@ -2,7 +2,7 @@
 require_once 'FonctionsDB.php';
 //On commence la session
 session_start();
-GetDataVideo($_GET['id'], $_GET['idUser']);
+GetDataVideo($_GET['id']);
 //On verifie si l'utilisateur n'est pas logué dans le site, si oui il est redirigé sur la page d'acceuil
 if (empty($_SESSION['user_name'])) {
     header('Location: ./Index.php');

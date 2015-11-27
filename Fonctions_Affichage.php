@@ -1,18 +1,17 @@
 <?php
 require_once 'FonctionsDB.php';
 
+//Fonction qui affiche les données de l'utilisateur
 function ReadUser($id) {
     if (isset($id)) {
-        //On prépare la requête pour afficher les informations
+        //On prépare la requête pour afficher les informations de l'utilisateur puis on l'éxecute
         $count = GetConnection()->prepare("SELECT * FROM users WHERE idUser = '" . $id . "' LIMIT 1");
-
-        //On execute la requête
         $count->execute();
 
         //On met dans un tableau les données reçus de la base
         $ligne = $count->fetch(PDO::FETCH_ASSOC);
 
-        //On affiche les informations reçus de la base de données
+        //On affiche les informations de l'utilisateur reçus de la base de données
         echo ' Nom : ' . $ligne['nom'] . ' <br/> ';
         echo ' Prénom : ' . $ligne['prenom'] . ' <br/> ';
         echo ' Pseudonyme : ' . $ligne['pseudo'] . ' <br/> ';
@@ -21,11 +20,13 @@ function ReadUser($id) {
     }
 }
 
+//Fonction qui permet de modifier les données de l'utilisateur
 function InfoUser() {
+    //On prépare la requête de séléction des données de l'utilisateur qui est connecté puis on l'éxecute
     $count = GetConnection()->prepare("SELECT * FROM users WHERE idUser = '" . $_SESSION['user_id'] . "' LIMIT 1");
-
     $count->execute();
-
+    
+    //On met les valeurs dans un tableau
     $ligne = $count->fetch(PDO::FETCH_ASSOC);
 
     //On affiche les données
@@ -94,17 +95,16 @@ function InfoUser() {
     </fieldset>';
 }
 
-function ShowVideo($idVideo) {
-    //On prépare la requête pour afficher les informations
-    $showVideo = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users NATURAL JOIN categories WHERE idVideo = $idVideo ");
 
-    //On execute la requête
+//Fonction qui affiche la vidéo que l'on a choisi
+function ShowVideo($idVideo) {
+    //On prépare la requête pour afficher les informations de la vidéo qu'on a choisi puis on l'éxecute
+    $showVideo = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users NATURAL JOIN categories WHERE idVideo = $idVideo ");
     $showVideo->execute();
 
-    //On crée une boucle pour afficher tout le contenu présent dans la base
+    //On met les valeurs dans un tableau
     while ($row = $showVideo->fetch(PDO::FETCH_ASSOC)) {
-
-        //On affiche les informations voulues
+        //On affiche les informations de la vidéo à chaque tour de boucle
         echo '<h1>' . $row['nomVideo'] . '</h1>';
         echo '<br />';
         echo '<iframe width="750" height="400" src="https://www.youtube.com/embed/' . $row['lienVideo'] . '" frameborder="0" allowfullscreen></iframe>';
@@ -118,14 +118,19 @@ function ShowVideo($idVideo) {
     }
 }
 
+//Fonction qui permet d'afficher tous les utilsateurs présents dans le site
 function GetAllUsers() {
+    //On met dans une variable le résultat de la fonction sélectionnée
     $user = SelectAllUsers();
+    
     foreach ($user as $value) {
+        //On affiche tous les commentaires avec toutes les informations
         echo ' Nom : ' . $value['nom'] . ' <br/> ';
         echo ' Prénom : ' . $value['prenom'] . ' <br/> ';
         echo ' Pseudo : ' . $value['pseudo'] . ' <br/> ';
         echo ' Email : ' . $value['email'] . ' <br/> ';
         echo ' Date de naisssance : ' . $value['dateNaissance'] . ' <br/> ';
+        //On affiche le lien seulement si l'utilisateur n'est pas admin
         if ($_SESSION['admin'] != $value['admin']) {
             echo '<a href="Supprimer_Utilisateur.php?id=' . $value['idUser'] . '">Supprimer l\'utilisateur</a> <br/>';
         }
@@ -133,9 +138,13 @@ function GetAllUsers() {
     }
 }
 
+//Fonction qui permet d'afficher toutes les vidéos présentes dans le site
 function GetAllVideos() {
+    //On met dans une variable le résultat de la fonction sélectionnée
     $video = SelectAllVideos();
+    
     foreach ($video as $value) {
+        //On affiche tous les commentaires avec toutes les informations
         echo ' Nom de la vidéo : ' . $value['nomVideo'] . ' <br/> ';
         echo ' Par : ' . $value['pseudo'] . ' <br/> ';
         echo ' Catégorie : ' . $value['nomCategorie'] . ' <br/> ';
@@ -144,12 +153,17 @@ function GetAllVideos() {
     }
 }
 
+//Fonction qui permet d'afficher tous les commentaires de la vidéo qu'on a choisi
 function ShowComments($idVideo) {
+    //On sélectionne tous les commentaires qui sont présentes dans la vidéo qu'on a choisi
     $select = GetConnection()->prepare("SELECT * FROM commentaires NATURAL JOIN users WHERE idVideo = '$idVideo'");
     $select->execute();
+    
+    //On met dans un tableau les valeurs de la requête
     $comment = $select->fetchAll(PDO::FETCH_ASSOC);
     
     foreach($comment as $value) {
+        //On affiche tous les commentaires avec toutes les informations
         echo ''. $value['pseudo'] .' le, '. $value['dateMessage'] .': <br/>';
         echo ''. $value['message'] .'<br/>';
         echo '<br/>';
