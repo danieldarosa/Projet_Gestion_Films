@@ -5,17 +5,11 @@
  * Description : Page qui permet à n'importe quel utilisateur de contacter le support
  * Auteur : Daniel DA ROSA
  * Version : 1.0
------------------------------------------------------------------------------- */
+  ------------------------------------------------------------------------------ */
 
-require_once 'Fonctions.php';
+require_once 'FonctionsDB.php';
 //On commence la session
 session_start();
-
-//On verifie si l'utilisateur n'est pas logué dans le site, si oui il est redirigé sur la page d'acceuil
-if (empty($_SESSION['user_name'])) {
-    header('Location: ./Index.php');
-    exit();
-}
 ?>
 
 <!DOCTYPE HTML>
@@ -28,33 +22,38 @@ if (empty($_SESSION['user_name'])) {
     <body> 
         <div id="Conteneur">
             <header>
-            </header>
-            <nav>
-                <fieldset class="log">
-                    <legend>
-                        Logout
-                    </legend>
-                    <?php
-                    //On affiche un message de bienvenue à l'utilisateur qui est connecté
-                    if (isset($_SESSION['user_name'])) {
-                        WelcomeMessage();
-                    }
-                    ?>
-                </fieldset>
-                <h1>Menu</h1>
-                <ul><a href="./Profil.php">Profil</a></ul>
-                <ul><a href="./Liste_Videos.php">Voir les vidéos</a></ul>
-                <ul><a href="./Support.php">Support</a></ul>
                 <?php
-                //On verifie si la personne connectée est bien un administrateur
-                if ($_SESSION['admin'] == 1) {
-                    IfAdmin();
+                //On affiche un message de bienvenue à l'utilisateur qui est connecté
+                if ($_SESSION['connecte'] == true) {
+                    WelcomeMessage($_SESSION['user_name']);
+                } else {
+                    IfNotConnected();
                 }
                 ?>
+            </header>
+            <nav>
+                <h1>Menu</h1>
+                <?php
+                if ($_SESSION['connecte'] == true) {
+                    IfConnected();
+                    //On verifie si la personne connectée est bien un administrateur
+                    if ($_SESSION['admin'] == 1) {
+                        IfAdmin();
+                    }
+                }
+                ?>
+                <?php
+                if ($_SESSION['connecte'] == false) {
+                    echo'<ul><a href="./Index.php">Page d\'acceuil</a></ul>';
+                }
+                ?>
+                <ul><a href="./Liste_Videos.php">Voir les vidéos</a></ul>
+                <ul><a href="./Support.php">Support</a></ul>
             </nav>
             <section>
-                <h1>Comment ajouter une vidéo</h1>
-                <p></p>
+                <h1>Support</h1>
+                <p>Si vous avez des questions, ou le moindre soucis concernant son fonctionnement, veuillez contacter le modérateur sur cette adresse ci-dessous :</p>
+                <p>film.support@gmail.com</p>
             </section>
             <footer>
                 Copyright® - Daniel DA ROSA - 2015

@@ -1,3 +1,11 @@
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : cssProjet.css
+ * Description : Feuille de style du site
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+ * ATTENTION : Si votre ordinateur ne possède pas la police OCR A Std veuillez l'installer dans votre ordinateur (le fichier se trouve dans le dossier "Police")
+------------------------------------------------------------------------------ */
 body
 {
     background-image: url("../Images/Fond.jpeg");

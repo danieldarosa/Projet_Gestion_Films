@@ -1,13 +1,13 @@
 <?php
 /* ------------------------------------------------------------------------------
  * Projet : Projet gestion de films
- * Fichier : Admin.php
+ * Fichier : Tutoriel_Ajout_Video.php
  * Description : Page qui permet à l'utilisateur de savoir comment ajouter une vidéo sur le site
  * Auteur : Daniel DA ROSA
  * Version : 1.0
 ------------------------------------------------------------------------------ */
 
-require_once 'Fonctions.php';
+require_once 'FonctionsDB.php';
 //On commence la session
 session_start();
 
@@ -28,23 +28,19 @@ if (empty($_SESSION['user_name'])) {
     <body> 
         <div id="Conteneur">
             <header>
+                <?php
+                //On affiche un message de bienvenue à l'utilisateur qui est connecté
+                if (isset($_SESSION['user_name'])) {
+                    WelcomeMessage($_SESSION['user_name']);
+                }
+                ?>
             </header>
             <nav>
-                <fieldset class="log">
-                    <legend>
-                        Logout
-                    </legend>
-                    <?php
-                    //On affiche un message de bienvenue à l'utilisateur qui est connecté
-                    if (isset($_SESSION['user_name'])) {
-                        WelcomeMessage();
-                    }
-                    ?>
-                </fieldset>
                 <h1>Menu</h1>
                 <ul><a href="./Profil.php">Profil</a></ul>
                 <ul><a href="./Liste_Videos.php">Voir les vidéos</a></ul>
                 <ul><a href="./Support.php">Support</a></ul>
+                <ul><a href="./Logout.php">Logout</a></ul>
                 <?php
                 //On verifie si la personne connectée est bien un administrateur
                 if ($_SESSION['admin'] == 1) {
@@ -54,7 +50,12 @@ if (empty($_SESSION['user_name'])) {
             </nav>
             <section>
                 <h1>Comment ajouter une vidéo</h1>
-                <p></p>
+                <p>Dans ce site, vous pouvez ajouter vos vidéos qui sont sur votre compte Youtube sur ce site.</p>
+                <p>Pour cela, il faut seulement récupérer la chaîne de caracatère qui se trouve à la fin de votre lien après le "v=" comme sur cette image ci-dessous :</p>
+                <img src="Images/lien.PNG" alt="lien" />
+                <p>Après avoir copié ce lien (Ctrl + C), il vous suffit désormais de le coller (Ctrl + V) dans le champ "lien de la vidéo".</p>
+                <p>Pour finir il vous faut remplir les autres champs et cliquer sur le bouton de confirmation, et votre vidéo et ajoutée !</p>
+                <a href="./Ajouter_Video.php">Retourner sur la page d'ajout de la vidéo</a>
             </section>
             <footer>
                 Copyright® - Daniel DA ROSA - 2015
