@@ -32,7 +32,7 @@ if (isset($_REQUEST['envoyer'])) {
                 <p>Génial ! Vous faites parti désormais de ce site !</p>
                 <p>Maintenant vous pouvez jeter un coup d'oeil a votre profil et aux autres fonctionnalités du site en vous connectant.</p>
             </section>
-            <footer></footer>
+            <footer>Copyright® - Daniel DA ROSA - 2015</footer>
         </div>
     </body>
 </html>

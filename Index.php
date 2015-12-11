@@ -29,7 +29,9 @@ $_SESSION['connecte'] = false;
                 <p>Si vous voulez vous inscrire cliquez sur le lien d'inscription en-dessous.</p>
                 <a href="Inscription.php">Inscrivez-vous !</a>
             </section>
-            <footer></footer>
+            <footer>
+                Copyright® - Daniel DA ROSA - 2015
+            </footer>
         </div>
     </body>
 </html>

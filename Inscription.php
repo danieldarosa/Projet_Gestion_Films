@@ -98,7 +98,9 @@ if (!empty($_SESSION['user_id'])) {
                 </form>
                 <p>Les champs avec * sont obligatoires</p>
             </section>
-            <footer></footer>
+            <footer>
+                Copyright® - Daniel DA ROSA - 2015
+            </footer>
         </div>
     </body>
 </html>

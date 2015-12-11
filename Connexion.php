@@ -32,7 +32,9 @@ if (isset($_REQUEST['envoyer'])) {
                 <h1>Tentative de connexion echouée</h1>
                 <p>Vous n'avez pas rentré les bons champs... veuillez réessayer</p>
             </section>
-            <footer></footer>
+            <footer>
+                Copyright® - Daniel DA ROSA - 2015
+            </footer>
         </div>
     </body>
 </html>

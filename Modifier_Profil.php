@@ -50,6 +50,7 @@ if (empty($_SESSION['user_name'])) {
                 </form>
             </section>
             <footer>
+                Copyright® - Daniel DA ROSA - 2015
             </footer>
         </div>
     </body>

@@ -94,6 +94,7 @@ if (empty($_SESSION['user_name'])) {
                 <p>*Voir tutoriel pour le lien de votre vidéo</p>
             </section>
             <footer>
+                Copyright® - Daniel DA ROSA - 2015
             </footer>
         </div>
     </body>

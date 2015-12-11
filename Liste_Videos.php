@@ -55,6 +55,7 @@ session_start();
                 <?php SelectVideos(); ?>
             </section>
             <footer>
+                Copyright® - Daniel DA ROSA - 2015
             </footer>
         </div>
     </body>
