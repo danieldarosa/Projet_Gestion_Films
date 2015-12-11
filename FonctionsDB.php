@@ -44,11 +44,23 @@ function Login($email, $password) {
         $_SESSION['user_id'] = $row['idUser'];
         $_SESSION['user_name'] = $row['email'];
         $_SESSION['admin'] = $row['admin'];
+        $_SESSION['connecte'] = true;
 
         //On redirige l'utilisateur dans sa page de profil
         header('Location: ./Profil.php');
         exit();
     }
+}
+
+function logout() {
+    //On enlève et détruit toutes les sessions que l'utilisateur à utilisé pour se connecter
+    session_unset();
+    session_destroy();
+
+    $_SESSION['connecte'] = false;
+    //On redirige l'utilisateur sur la page d'acceuil
+    header('Location: ./Index.php');
+    exit();
 }
 
 //Fonction d'insertion de l'utilisateur

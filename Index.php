@@ -1,6 +1,6 @@
 <?php
 session_start();
-session_destroy();
+$_SESSION['connecte'] = false;
 ?>
 <!DOCTYPE HTML>
 <html lang="fr">

@@ -1,9 +1,8 @@
 <?php
 require_once 'FonctionsDB.php';
-if(!empty($_SESSION['user_id'])) {
-//On commence la session
+
 session_start();
-}
+
 ?>
 
 <!DOCTYPE HTML>
@@ -18,7 +17,7 @@ session_start();
             <header>
                 <?php
                 //On affiche un message de bienvenue à l'utilisateur qui est connecté
-                if (isset($_SESSION['user_name'])) {
+                if ($_SESSION['connecte'] == true) {
                     WelcomeMessage($_SESSION['user_name']);
                 }
                 else {
@@ -27,10 +26,9 @@ session_start();
                 ?>
             </header>
             <nav>
-                <h1>Menu</h1>
-                
+                <h1>Menu</h1>                
                 <?php
-                if(!empty($_SESSION['user_id'])) {
+                if($_SESSION['connecte'] == true) {
                     IfConnected();
                     //On verifie si la personne connectée est bien un administrateur
                     if ($_SESSION['admin'] == 1) {
@@ -39,7 +37,7 @@ session_start();
                 }
                 ?>
                 <?php
-                    if(empty($_SESSION['user_id'])) {
+                    if($_SESSION['connecte'] == false) {
                         echo'<ul><a href="./Index.php">Page d\'acceuil</a></ul>';
                     }
                 ?>
@@ -49,7 +47,7 @@ session_start();
             <section>
                 <h1>Liste des vidéos</h1>
                 <?php
-                    if(!empty($_SESSION['user_id'])) {
+                    if($_SESSION['connecte'] == true) {
                         echo'<a href="./Ajouter_Video.php">Ajouter une vidéo</a>';
                     }
                 ?>
