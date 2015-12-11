@@ -1,4 +1,12 @@
 <?php
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : Liste_Videos.php
+ * Description : Page qui affiche toutes les vidéos présentes sur le site
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
+
 require_once 'FonctionsDB.php';
 
 session_start();

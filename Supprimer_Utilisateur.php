@@ -1,4 +1,12 @@
 <?php
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : Supprimer_Utilisateur.php
+ * Description : Page qui permet de supprimer un utilisateur du site
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
+
 require_once 'FonctionsDB.php';
 //On commence la session
 session_start();

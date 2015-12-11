@@ -1,4 +1,12 @@
 <?php
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : Fonctions_Affichage.php
+ * Description : Page qui regroupe les fonctions d'affichage des données
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
+
 require_once 'FonctionsDB.php';
 
 //Fonction qui affiche les données de l'utilisateur

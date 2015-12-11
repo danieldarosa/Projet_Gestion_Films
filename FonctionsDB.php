@@ -1,5 +1,11 @@
 <?php
-
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : FonctionsDB.php
+ * Description : Page qui regroupe les fonctions qui utilisent la base de données
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
 require_once 'Fonctions_Affichage.php';
 
 //Constantes pour la connexion à la base

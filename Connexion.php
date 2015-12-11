@@ -1,4 +1,11 @@
 <?php
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : Connexion.php
+ * Description : Page qui permet de se connecter au site
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
 require_once 'FonctionsDB.php';
 
 if (isset($_REQUEST['envoyer'])) {

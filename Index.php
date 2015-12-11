@@ -1,4 +1,11 @@
 <?php
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : Index.php
+ * Description : Page d'acceuil du site
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
 session_start();
 $_SESSION['connecte'] = false;
 ?>

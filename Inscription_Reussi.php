@@ -1,4 +1,12 @@
 <?php
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : Inscription_Reussi.php
+ * Description : Page qui ajoute les données d'inscription dans la base de données
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
+
 require_once 'FonctionsDB.php';
 
 if (isset($_REQUEST['envoyer'])) {

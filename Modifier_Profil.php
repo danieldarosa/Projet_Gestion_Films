@@ -1,4 +1,12 @@
 <?php
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : Modifier_Profil.php
+ * Description : Page qui permet de modifier les données de l'utilsateur
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
+
 require_once 'FonctionsDB.php';
 //On commence la session
 session_start();

@@ -1,4 +1,12 @@
 <?php
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : Inscription.php
+ * Description : Page qui permet à un nouvel utilisateur s'inscrire au site
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
+
 //On commence la session
 session_start();
 

@@ -1,4 +1,12 @@
 <?php
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : Admin.php
+ * Description : Page qui supprime la vidéo choisie dans la base
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
+
 session_start();
 require_once 'FonctionsDB.php';
 

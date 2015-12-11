@@ -1,4 +1,12 @@
 <?php
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : Admin.php
+ * Description : Page qui permet à l'utilisateur de savoir comment ajouter une vidéo sur le site
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
+
 require_once 'Fonctions.php';
 //On commence la session
 session_start();

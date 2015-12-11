@@ -1,4 +1,11 @@
 ﻿<?php
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : Administration.php
+ * Description : Page qui permet de supprimer les vidéos et les utilisateurs présents sur le site
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
 require_once 'FonctionsDB.php';
 //On commence la session
 session_start();

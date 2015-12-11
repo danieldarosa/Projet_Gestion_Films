@@ -1,4 +1,12 @@
 <?php
+/* ------------------------------------------------------------------------------
+ * Projet : Gestions figurines animés Japonais
+ * Fichier : Admin.php
+ * Description : Page qui permet de regarder la vidéo que l'utilisateur à choisi
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
+
 require_once 'FonctionsDB.php';
 //On commence la session
 session_start();

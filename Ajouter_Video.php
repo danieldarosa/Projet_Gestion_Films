@@ -1,4 +1,11 @@
 <?php
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : Ajouter_Video.php
+ * Description : Page qui permet d'ajouter une vidéo
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
 require_once 'FonctionsDB.php';
 //On commence la session
 session_start();

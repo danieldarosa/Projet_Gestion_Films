@@ -1,4 +1,12 @@
 <?php
+/* ------------------------------------------------------------------------------
+ * Projet : Projet gestion de films
+ * Fichier : Support.php
+ * Description : Page qui permet à n'importe quel utilisateur de contacter le support
+ * Auteur : Daniel DA ROSA
+ * Version : 1.0
+------------------------------------------------------------------------------ */
+
 require_once 'Fonctions.php';
 //On commence la session
 session_start();
