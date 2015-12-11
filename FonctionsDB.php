@@ -54,6 +54,7 @@ function Login($email, $password) {
 
 function logout() {
     //On enlève et détruit toutes les sessions que l'utilisateur à utilisé pour se connecter
+    session_start();
     session_unset();
     session_destroy();
 
@@ -85,31 +86,6 @@ function InsertUser($nom, $prenom, $pseudo, $email, $password, $date) {
         //Si non, on affiche un message d'erreur
         echo 'Les champs remplis ne sont pas corrects...';
     }
-}
-
-//Fonction de vérification si l'utilisateur est un administrateur
-function IfAdmin() {
-    echo '<ul><a href="./Administration.php"> Administration </a></ul>';
-}
-
-function IfNotConnected() {
-    echo '<form id="connexion" action="Connexion.php" method="post" >
-          Connexion :
-          <input type="text" name="email" id="email" placeholder="Email" required autofocus />
-          <input type="password" name="password" id="password" placeholder="Mot de passe" required />
-          <input type="submit" name="envoyer" id="envoyer" required  />
-          </form>';
-}
-
-function IfConnected() {
-    echo '<ul><a href="./Profil.php">Profil</a></ul>
-          <ul><a href="./Liste_Videos.php">Voir les vidéos</a></ul>
-          <ul><a href="./Logout.php">Logout</a></ul>';
-}
-
-//Fonction qui affiche le message de bienvenue à l'utilisateur
-function WelcomeMessage($user) {
-    echo 'Bienvenue ' . $user;
 }
 
 //Fonction qui permet de modifier le profil de l'utilisateur
@@ -177,6 +153,7 @@ function AddVideos($id, $nom, $lien, $categorie, $description) {
 
 //Fonction qui séléctionne toutes les vidéos présentes dans la base
 function SelectVideos() {
+    
     //On prépare la requête de sélection de toutes les vidéos présentes dans la base puis on l'éxecute
     $count = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users ORDER BY nomVideo");
     $count->execute();
@@ -209,6 +186,8 @@ function GetDataVideo($id) {
 
 //Fonction qui séléctionne tout les utilisateurs présentes dans le site
 function SelectAllUsers() {
+    //On encode les noms en utf8
+    $select = GetConnection()->exec('SET NAMES utf8');
     //On prépare la requête de séléction des utilisateurs
     $select = GetConnection()->prepare("SELECT * FROM users");
     $select->execute();
@@ -222,6 +201,8 @@ function SelectAllUsers() {
 
 //Fonction qui séléctionne toutes les vidéos qui sont présentes dans le site
 function SelectAllVideos() {
+    //On encode les catégories en utf8
+    $select = GetConnection()->exec('SET NAMES utf8');
     //On prépare la requête de sélection de toutes les vidéos
     $select = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users NATURAL JOIN categories");
     $select->execute();

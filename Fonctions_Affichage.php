@@ -20,6 +20,12 @@ function ReadUser($id) {
     }
 }
 
+
+//Fonction qui affiche le message de bienvenue à l'utilisateur
+function WelcomeMessage($user) {
+    echo 'Bienvenue ' . $user;
+}
+
 //Fonction qui permet de modifier les données de l'utilisateur
 function InfoUser() {
     //On prépare la requête de séléction des données de l'utilisateur qui est connecté puis on l'éxecute
@@ -29,7 +35,7 @@ function InfoUser() {
     //On met les valeurs dans un tableau
     $ligne = $count->fetch(PDO::FETCH_ASSOC);
 
-    //On affiche les données
+    //On affiche les données de l'utilisateur
     echo '<fieldset>
         <legend>
 	Modifier votre profil
@@ -99,7 +105,7 @@ function InfoUser() {
 //Fonction qui affiche la vidéo que l'on a choisi
 function ShowVideo($idVideo) {
     //On prépare la requête pour afficher les informations de la vidéo qu'on a choisi puis on l'éxecute
-    $showVideo = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users NATURAL JOIN categories WHERE idVideo = $idVideo ");
+    $showVideo = GetConnection()->prepare("SELECT * FROM videos NATURAL JOIN users NATURAL JOIN categories WHERE idVideo = '$idVideo' ORDER BY nomVideo ASC ");
     $showVideo->execute();
 
     //On met les valeurs dans un tableau
@@ -107,7 +113,7 @@ function ShowVideo($idVideo) {
         //On affiche les informations de la vidéo à chaque tour de boucle
         echo '<h1>' . $row['nomVideo'] . '</h1>';
         echo '<br />';
-        echo '<iframe width="750" height="400" src="https://www.youtube.com/embed/' . $row['lienVideo'] . '" frameborder="0" allowfullscreen></iframe>';
+        echo '<iframe width="950" height="500" src="https://www.youtube.com/embed/' . $row['lienVideo'] . '" frameborder="0" allowfullscreen></iframe>';
         echo '<br />';
         echo 'Date d\' ajout : ' . $row['dateAjout'];
         echo '<br />';
@@ -156,7 +162,7 @@ function GetAllVideos() {
 //Fonction qui permet d'afficher tous les commentaires de la vidéo qu'on a choisi
 function ShowComments($idVideo) {
     //On sélectionne tous les commentaires qui sont présentes dans la vidéo qu'on a choisi
-    $select = GetConnection()->prepare("SELECT * FROM commentaires NATURAL JOIN users WHERE idVideo = '$idVideo'");
+    $select = GetConnection()->prepare("SELECT * FROM commentaires NATURAL JOIN users WHERE idVideo = '$idVideo' ORDER BY idCommentaire ASC");
     $select->execute();
     
     //On met dans un tableau les valeurs de la requête
@@ -168,5 +174,26 @@ function ShowComments($idVideo) {
         echo ''. $value['message'] .'<br/>';
         echo '<br/>';
     }
+}
+
+//Fonction de vérification si l'utilisateur est un administrateur
+function IfAdmin() {
+    echo '<ul><a href="./Administration.php"> Administration </a></ul>';
+}
+
+//Fonction qui affiche les liens si l'utilisateur n'est pas connecté
+function IfNotConnected() {
+    echo '<form id="connexion" action="Connexion.php" method="post" >
+          Connexion :
+          <input type="text" name="email" id="email" placeholder="Email" required autofocus />
+          <input type="password" name="password" id="password" placeholder="Mot de passe" required />
+          <input type="submit" name="envoyer" id="envoyer" required  />
+          </form>';
+}
+
+//Fonction qui affiche les liens si l'utilisateur est connecté
+function IfConnected() {
+    echo '<ul><a href="./Profil.php">Profil</a></ul>
+          <ul><a href="./Logout.php">Logout</a></ul>';
 }
 ?>

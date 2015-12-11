@@ -3,11 +3,6 @@ require_once 'FonctionsDB.php';
 //On commence la session
 session_start();
 GetDataVideo($_GET['id']);
-//On verifie si l'utilisateur n'est pas logué dans le site, si oui il est redirigé sur la page d'acceuil
-if (empty($_SESSION['user_name'])) {
-    header('Location: ./Index.php');
-    exit();
-}
 ?>
 
 <!DOCTYPE HTML>
@@ -22,23 +17,31 @@ if (empty($_SESSION['user_name'])) {
             <header>
                 <?php
                 //On affiche un message de bienvenue à l'utilisateur qui est connecté
-                if (isset($_SESSION['user_name'])) {
+                if ($_SESSION['connecte'] == true) {
                     WelcomeMessage($_SESSION['user_name']);
+                } else {
+                    IfNotConnected();
                 }
                 ?>
             </header>
             <nav>
                 <h1>Menu</h1>
-                <ul><a href="./Profil.php">Profil</a></ul>
-                <ul><a href="./Liste_Videos.php">Voir les vidéos</a></ul>
                 <?php
-                //On verifie si la personne connectée est bien un administrateur
-                if ($_SESSION['admin'] == 1) {
-                    IfAdmin();
+                if ($_SESSION['connecte'] == true) {
+                    IfConnected();
+                    //On verifie si la personne connectée est bien un administrateur
+                    if ($_SESSION['admin'] == 1) {
+                        IfAdmin();
+                    }
                 }
                 ?>
+                <?php
+                if ($_SESSION['connecte'] == false) {
+                    echo'<ul><a href="./Index.php">Page d\'acceuil</a></ul>';
+                }
+                ?>
+                <ul><a href="./Liste_Videos.php">Voir les vidéos</a></ul>
                 <ul><a href="./Support.php">Support</a></ul>
-                <ul><a href="./Logout.php">Logout</a></ul>
             </nav>
             <section>
                 <form id="Supprimer" action="Supprimer_Video_Reussi.php">
@@ -48,8 +51,10 @@ if (empty($_SESSION['user_name'])) {
                     }
                     ?>
                     <?php
-                    if($_SESSION['user_id'] == $_GET['idUser']) {
-                        echo'<br/><input type="submit" name="supprimer" value="Supprimer la vidéo">';
+                    if ($_SESSION['connecte'] == true) {
+                        if ($_SESSION['user_id'] == $_GET['idUser']) {
+                            echo'<br/><input type="submit" name="supprimer" value="Supprimer la vidéo">';
+                        }
                     }
                     ?>
                 </form>
@@ -57,10 +62,14 @@ if (empty($_SESSION['user_name'])) {
                     <h1>Commentaires de la vidéo</h1>
                     <?php
                     ShowComments($_SESSION['idVideo']);
+                    if ($_SESSION['connecte'] == true) {
+
+                        echo '<textarea name="commentaire" cols="133" rows="3" placeholder="Ajouter un commentaire" required autofocus></textarea>';
+                        echo'<br />';
+                        echo'<input type="submit" name="commenter" value="Ajouter un commentaire">';
+                    }
                     ?>
-                    <textarea name="commentaire" cols="133" rows="3" placeholder="Ajouter un commentaire" required autofocus></textarea>
-                    <br />
-                    <input type="submit" name="commenter" value="Ajouter un commentaire">
+
                 </form>
             </section>
             <footer>

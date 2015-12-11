@@ -2,7 +2,6 @@
 require_once 'FonctionsDB.php';
 
 session_start();
-
 ?>
 
 <!DOCTYPE HTML>
@@ -41,6 +40,7 @@ session_start();
                         echo'<ul><a href="./Index.php">Page d\'acceuil</a></ul>';
                     }
                 ?>
+                <ul><a href="./Liste_Videos.php">Voir les vidéos</a></ul>
                 <ul><a href="./Support.php">Support</a></ul>
                 
             </nav>
