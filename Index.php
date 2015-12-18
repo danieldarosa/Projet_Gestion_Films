@@ -33,6 +33,7 @@ $_SESSION['connecte'] = false;
             </nav>
             <section>
                 <h1>Bienvenue !</h1>
+                <p>Bienvenue sur ce site de gestion de vidéos ou vous pouvez partager vos créations et exploits ici-même !</p>
                 <p>Si vous voulez vous inscrire cliquez sur le lien d'inscription en-dessous.</p>
                 <a href="Inscription.php">Inscrivez-vous !</a>
             </section>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 20 Novembre 2015 à 11:15
+-- Généré le :  Ven 18 Décembre 2015 à 07:41
 -- Version du serveur :  5.6.15-log
 -- Version de PHP :  5.4.24
 
@@ -57,16 +57,15 @@ CREATE TABLE IF NOT EXISTS `commentaires` (
   PRIMARY KEY (`idCommentaire`),
   KEY `idVideo` (`idVideo`,`idUser`),
   KEY `idUser` (`idUser`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Contenu de la table `commentaires`
 --
 
 INSERT INTO `commentaires` (`idCommentaire`, `message`, `dateMessage`, `idVideo`, `idUser`) VALUES
-(1, 'Excellent, LOL !', '2015-11-20', 5, 3),
-(2, 'YUUUUUUUUUUUKI <3', '2015-11-20', 18, 3),
-(3, 'slurp !', '2015-11-20', 18, 5);
+(1, 'GÃ©nial !', '2015-12-11', 1, 6),
+(2, 'Merci ! :)', '2015-12-11', 1, 4);
 
 -- --------------------------------------------------------
 
@@ -84,16 +83,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   `dateNaissance` date NOT NULL,
   `admin` int(11) NOT NULL,
   PRIMARY KEY (`idUser`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Contenu de la table `users`
 --
 
 INSERT INTO `users` (`idUser`, `nom`, `prenom`, `pseudo`, `email`, `password`, `dateNaissance`, `admin`) VALUES
-(3, 'DA ROSA', 'Daniel', 'ErzaTheTitania91', 'daniel.darosa97@gmail.com', 'd40dde993c639bb6f07a7b1cc9f88a2cb12f0c45', '2015-09-02', 1),
-(4, 'test', 'test', 'test', 'test.test@test.com', '859ec9e23a09ce6fe7f3fcc5fdaa4e2fce1f23c4', '2015-01-06', 0),
-(5, 'nyan', 'nyan', 'nyan', 'nyan.nyan@nyan.com', 'ad65d9c63c2db59493f3ed8712eb40a3ea055190', '2015-11-09', 0);
+(4, 'test', 'test', 'test', 'test.test@test.com', '859ec9e23a09ce6fe7f3fcc5fdaa4e2fce1f23c4', '2015-01-06', 1),
+(6, 'Nouveau', 'Test', 'Test2', 'tests.tests@tests.com', 'b3191b81658da1aba7392dcec0cfa931cd1f1385', '2015-12-11', 0),
+(8, 'Film', 'Support', 'SupportSite', 'film.support@gmail.com', '4ffa7a3a97c777008d2fef4ec9b9dec4556c7512', '2015-12-11', 1);
 
 -- --------------------------------------------------------
 
@@ -112,19 +111,15 @@ CREATE TABLE IF NOT EXISTS `videos` (
   PRIMARY KEY (`idVideo`),
   KEY `idCategorie` (`idCategorie`,`idUser`),
   KEY `idUser` (`idUser`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Contenu de la table `videos`
 --
 
 INSERT INTO `videos` (`idVideo`, `nomVideo`, `lienVideo`, `descVideo`, `dateAjout`, `idCategorie`, `idUser`) VALUES
-(5, 'TAS - GBA Metroid Fusion', '8EOBTd99nnY', 'TAS de Metroid Fusion par BioSpark en 0:55 (In game time)\r\nwww.tasvideos.org', '2015-10-30', 2, 3),
-(6, 'ALLAHU AKBAR', 'XSdzWEImjY4', '/pol', '2015-10-30', 3, 3),
-(7, 'Scandal - Awanaitsumorino, Genkidene', '_EDvabyo620', 'Fuck yeah !', '2015-11-06', 1, 5),
-(16, 'Scandal - Kagen No Tsuki', 'fFyUvfD-ZWU', 'sdsdfsdfsdf', '2015-11-13', 1, 4),
-(18, 'Yuki Yuki Yuki <3', 'NI_fgwbmJg0', 'gdfgdfgdfgf', '2015-11-13', 1, 3),
-(20, 'FranÃ§ois Hollande VS Kaamelott', 'seWlCQGzc7E', 'Lol', '2015-11-20', 3, 5);
+(1, 'Let''s play Minecraft [PS3]', 'a05niKAXmX8', 'Premier let''s play de Minecraft sur PS3 !', '2015-12-11', 2, 4),
+(2, 'Bande annonce Star Wars : Seul sur Mars', 'sjhEtg3VApY', 'Voici la bande annonce de Star Wars : Seul sur Mars !', '2015-12-11', 3, 6);
 
 --
 -- Contraintes pour les tables exportées
@@ -134,8 +129,8 @@ INSERT INTO `videos` (`idVideo`, `nomVideo`, `lienVideo`, `descVideo`, `dateAjou
 -- Contraintes pour la table `commentaires`
 --
 ALTER TABLE `commentaires`
-  ADD CONSTRAINT `commentaires_ibfk_1` FOREIGN KEY (`idVideo`) REFERENCES `videos` (`idVideo`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `commentaires_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`) ON DELETE NO ACTION ON UPDATE CASCADE;
+  ADD CONSTRAINT `commentaires_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `commentaires_ibfk_3` FOREIGN KEY (`idVideo`) REFERENCES `videos` (`idVideo`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `videos`
